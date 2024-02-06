@@ -16,6 +16,7 @@ const initialState = { message: null, errors: {} };
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
   const [state, dispatch] = useFormState(createInvoice, initialState);
+  console.log(state);
 
   return (
     <form action={dispatch}>
@@ -84,7 +85,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
         </div>
 
         {/* Invoice Status */}
-        <fieldset>
+        <fieldset aria-describedby="status-error">
           <legend className="mb-2 block text-sm font-medium">
             Set the invoice status
           </legend>
@@ -131,6 +132,13 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
               </p>
             ))}
         </div>
+      </div>
+      <div id="required-error" aria-live="polite" aria-atomic="true">
+        {state.message && (
+          <p className="mt-2 text-sm text-red-500" key={state.message}>
+            {state.message}
+          </p>
+        )}
       </div>
 
       <div className="mt-6 flex justify-end gap-4">
